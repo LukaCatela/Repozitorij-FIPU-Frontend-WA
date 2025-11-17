@@ -1,14 +1,17 @@
-<script setup></script>
+<script setup>
+import Body from './components/Body.vue';
+import Header from './components/Header.vue';
+import Footer from './components/Footer.vue';
+</script>
 
 <template>
-  <div class="
-text-lime-300
-bg-zinc-800/90
-border-sky-700
-border-2
-">
-Some text
-</div>
-</template>
+  <div class="flex flex-col min-h-screen">
+    <Header/>
 
-<style scoped></style>
+    <div class="flex-1 flex justify-center">
+      <Body/>
+    </div>
+
+  <Footer/>
+  </div>
+</template>
