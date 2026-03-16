@@ -5,7 +5,10 @@
     </div>
     <ul class="md:flex md:items-center">
       <li class="md:mx-4">
-        <a href="#" class="text-xl hover:text-amber-200">Home</a>
+        <RouterLink to="/" class="text-xl hover:text-amber-200 mx-2">Home</RouterLink>
+        <RouterLink to="/register" class="text-xl hover:text-amber-200 mx-2"
+          >Registracija</RouterLink
+        >
       </li>
     </ul>
   </div>

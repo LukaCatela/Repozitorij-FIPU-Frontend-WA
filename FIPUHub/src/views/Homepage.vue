@@ -4,7 +4,7 @@
     <section class="px-6 lg:px-20 py-20 flex flex-col lg:flex-row items-center gap-10">
       <div class="flex-1">
         <h1 class="text-4xl lg:text-5xl font-bold leading-tight">
-          Dobrodošli u <span class="text-[#FB8500]">FIPU Hub</span>
+          Dobrodošli u <span class="text-[#FFB703]">FIPU Hub</span>
         </h1>
         <p class="mt-5 text-lg text-[#219EBC] max-w-xl">
           Centralno mjesto za studentske projekte, članke, znanstvene radove i razmjenu poslova.
@@ -29,7 +29,7 @@
       </div>
 
       <div class="flex-1">
-        <img src="/public/logo_crni.png" alt="FIPU Hub" class="w-full drop-shadow-xl rounded-xl" />
+        <img src="/logo_crni.png" alt="FIPU Hub" class="w-full drop-shadow-xl rounded-xl" />
       </div>
     </section>
 
