@@ -1,17 +1,158 @@
 <template>
-  <div class="bg-[#8ECAE6] text-[#FFB703] py-3.5 px-6 shadow md:flex justify-between items-center">
-    <div class="flex items-center">
-      <img src="/logo_bili.png" alt="FipuGO Logo" class="h-10 w-auto" />
-    </div>
-    <ul class="md:flex md:items-center">
-      <li class="md:mx-4">
-        <RouterLink to="/" class="text-xl hover:text-amber-200 mx-2">Home</RouterLink>
-        <RouterLink to="/register" class="text-xl hover:text-amber-200 mx-2"
-          >Registracija</RouterLink
+  <header
+    class="bg-[#8ECAE6] border-b border-gray-200 px-6 py-3 flex items-center justify-between shadow-sm"
+  >
+    <!-- Logo -->
+    <RouterLink to="/" class="flex items-center gap-2">
+      <img src="/logo_bili.png" alt="FIPUHub Logo" class="h-9 w-auto" />
+    </RouterLink>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex items-center gap-1">
+      <RouterLink
+        to="/"
+        class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-[#FFB703] transition-colors"
+        >Početna</RouterLink
+      >
+      <RouterLink
+        to="/explore"
+        class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-[#FFB703] transition-colors"
+        >Istraži</RouterLink
+      >
+      <template v-if="auth.isLoggedIn">
+        <RouterLink
+          to="/projects"
+          class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-[#FFB703] transition-colors"
+          >Projekti</RouterLink
         >
-      </li>
-    </ul>
+        <RouterLink
+          to="/jobs"
+          class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-[#FFB703] transition-colors"
+          >Poslovi</RouterLink
+        >
+      </template>
+    </nav>
+
+    <!-- Right side -->
+    <div class="hidden md:flex items-center gap-3">
+      <template v-if="auth.isLoggedIn">
+        <RouterLink
+          to="/profile"
+          class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors"
+        >
+          <div
+            class="w-7 h-7 bg-[#8ECAE6] rounded-full flex items-center justify-center text-[#023047] font-bold text-xs"
+          >
+            {{ auth.user?.FirstName?.charAt(0) }}{{ auth.user?.LastName?.charAt(0) }}
+          </div>
+          <span class="text-sm font-medium text-[#023047]">{{ auth.user?.FirstName }}</span>
+        </RouterLink>
+        <button
+          @click="logout"
+          class="text-sm text-gray-400 hover:text-red-500 px-3 py-2 rounded-xl hover:bg-red-50 transition-colors"
+        >
+          Odjava
+        </button>
+      </template>
+      <template v-else>
+        <RouterLink
+          to="/login"
+          class="text-sm font-medium text-[#023047] px-4 py-2 rounded-xl hover:bg-gray-100 transition-colors"
+        >
+          Prijava
+        </RouterLink>
+        <RouterLink
+          to="/register"
+          class="text-sm font-bold bg-[#FFB703] text-[#023047] px-4 py-2 rounded-xl hover:bg-[#FB8500] transition-colors shadow-sm"
+        >
+          Registracija
+        </RouterLink>
+      </template>
+    </div>
+
+    <!-- Mobile menu button -->
+    <button
+      @click="menuOpen = !menuOpen"
+      class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+    >
+      <Menu v-if="!menuOpen" class="w-5 h-5 text-[#023047]" />
+      <X v-else class="w-5 h-5 text-[#023047]" />
+    </button>
+  </header>
+
+  <!-- Mobile menu -->
+  <div
+    v-if="menuOpen"
+    class="md:hidden bg-white border-b border-gray-200 px-6 py-4 flex flex-col gap-1"
+  >
+    <RouterLink
+      @click="menuOpen = false"
+      to="/"
+      class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors"
+      >Početna</RouterLink
+    >
+    <RouterLink
+      @click="menuOpen = false"
+      to="/explore"
+      class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors"
+      >Istraži</RouterLink
+    >
+    <template v-if="auth.isLoggedIn">
+      <RouterLink
+        @click="menuOpen = false"
+        to="/projects"
+        class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors"
+        >Projekti</RouterLink
+      >
+      <RouterLink
+        @click="menuOpen = false"
+        to="/jobs"
+        class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors"
+        >Poslovi</RouterLink
+      >
+      <RouterLink
+        @click="menuOpen = false"
+        to="/profile"
+        class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors"
+        >Profil</RouterLink
+      >
+      <button
+        @click="logout"
+        class="text-left text-sm text-red-500 px-3 py-2 rounded-xl hover:bg-red-50 transition-colors"
+      >
+        Odjava
+      </button>
+    </template>
+    <template v-else>
+      <RouterLink
+        @click="menuOpen = false"
+        to="/login"
+        class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors"
+        >Prijava</RouterLink
+      >
+      <RouterLink
+        @click="menuOpen = false"
+        to="/registration"
+        class="text-sm font-bold bg-[#FFB703] text-[#023047] px-3 py-2 rounded-xl hover:bg-[#FB8500] transition-colors text-center"
+        >Registracija</RouterLink
+      >
+    </template>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+import { useRouter, RouterLink } from 'vue-router'
+import { Menu, X } from 'lucide-vue-next'
+import { useAuthStore } from '@/stores/auth'
+
+const auth = useAuthStore()
+const router = useRouter()
+const menuOpen = ref(false)
+
+function logout() {
+  auth.logout()
+  menuOpen.value = false
+  router.push('/')
+}
+</script>
