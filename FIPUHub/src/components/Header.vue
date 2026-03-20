@@ -8,26 +8,26 @@
     </RouterLink>
 
     <!-- Desktop Nav -->
-    <nav class="hidden md:flex items-center gap-1">
+    <nav class="hidden md:flex items-center gap-1" v-if="auth.isLoggedIn">
       <RouterLink
         to="/"
-        class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-[#FFB703] transition-colors"
+        class="text-sm font-bold text-[#FFB703] px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
         >Početna</RouterLink
       >
       <RouterLink
         to="/explore"
-        class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-[#FFB703] transition-colors"
+        class="text-sm font-bold text-[#FFB703] px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
         >Istraži</RouterLink
       >
       <template v-if="auth.isLoggedIn">
         <RouterLink
           to="/projects"
-          class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-[#FFB703] transition-colors"
+          class="text-sm font-bold text-[#FFB703] px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
           >Projekti</RouterLink
         >
         <RouterLink
           to="/jobs"
-          class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-[#FFB703] transition-colors"
+          class="text-sm font-bold text-[#FFB703] px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
           >Poslovi</RouterLink
         >
       </template>
@@ -38,18 +38,29 @@
       <template v-if="auth.isLoggedIn">
         <RouterLink
           to="/profile"
-          class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors"
+          class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#FFB703]/20 transition-colors"
         >
-          <div
-            class="w-7 h-7 bg-[#8ECAE6] rounded-full flex items-center justify-center text-[#023047] font-bold text-xs"
-          >
-            {{ auth.user?.FirstName?.charAt(0) }}{{ auth.user?.LastName?.charAt(0) }}
+          <!-- Profile picture or initials fallback -->
+          <div class="w-8 h-8 rounded-full overflow-hidden flex shrink-0">
+            <img
+              v-if="auth.user?.profilePicture"
+              :src="auth.user.profilePicture"
+              alt="Profilna slika"
+              class="w-full h-full object-cover"
+            />
+            <div
+              v-else
+              class="w-full h-full bg-[#8ECAE6] flex items-center justify-center text-[#023047] font-bold text-xs"
+            >
+              {{ auth.user?.FirstName?.charAt(0) }}{{ auth.user?.LastName?.charAt(0) }}
+            </div>
           </div>
           <span class="text-sm font-medium text-[#023047]">{{ auth.user?.FirstName }}</span>
         </RouterLink>
+
         <button
           @click="logout"
-          class="text-sm text-gray-400 hover:text-red-500 px-3 py-2 rounded-xl hover:bg-red-50 transition-colors"
+          class="text-sm font-bold text-gray-400 hover:text-red-500 px-3 py-2 rounded-xl hover:bg-red-50 transition-colors"
         >
           Odjava
         </button>
@@ -57,7 +68,7 @@
       <template v-else>
         <RouterLink
           to="/login"
-          class="text-sm font-medium text-[#023047] px-4 py-2 rounded-xl hover:bg-gray-100 transition-colors"
+          class="text-sm font-semibold text-[#023047] px-4 py-2 rounded-xl hover:bg-gray-100 transition-colors"
         >
           Prijava
         </RouterLink>
