@@ -50,9 +50,9 @@
             />
             <div
               v-else
-              class="w-full h-full bg-[#8ECAE6] flex items-center justify-center text-[#023047] font-bold text-xs"
+              class="w-full h-full bg-white flex items-center justify-center text-[#023047] font-bold text-xs"
             >
-              {{ auth.user?.FirstName?.charAt(0) }}{{ auth.user?.LastName?.charAt(0) }}
+              {{ auth.user?.name?.charAt(0) }}{{ auth.user?.last_name?.charAt(0) }}
             </div>
           </div>
           <span class="text-sm font-medium text-[#023047]">{{ auth.user?.FirstName }}</span>
@@ -60,7 +60,7 @@
 
         <button
           @click="logout"
-          class="text-sm font-bold text-gray-400 hover:text-red-500 px-3 py-2 rounded-xl hover:bg-red-50 transition-colors"
+          class="text-sm font-bold text-[#FFB703] hover:text-red-500 px-3 py-2 rounded-xl hover:bg-red-50 transition-colors"
         >
           Odjava
         </button>
