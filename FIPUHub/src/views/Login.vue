@@ -82,6 +82,7 @@
 import { reactive, ref } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
 import { Eye, EyeOff } from 'lucide-vue-next'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
 
