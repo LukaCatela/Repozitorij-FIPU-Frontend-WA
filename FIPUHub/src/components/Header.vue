@@ -23,12 +23,7 @@
         <RouterLink
           to="/projects"
           class="text-sm font-bold text-[#FFB703] px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
-          >Projekti</RouterLink
-        >
-        <RouterLink
-          to="/jobs"
-          class="text-sm font-bold text-[#FFB703] px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
-          >Poslovi</RouterLink
+          >Moji projekti</RouterLink
         >
       </template>
     </nav>
