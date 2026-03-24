@@ -1,7 +1,10 @@
+import CreateProjects from '@/views/CreateProjects.vue'
 import Homepage from '@/views/Homepage.vue'
 import Login from '@/views/Login.vue'
 import Profile from '@/views/Profile.vue'
+import Projects from '@/views/Projects.vue'
 import Registration from '@/views/Registration.vue'
+import Search from '@/views/Search.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -26,6 +29,17 @@ const router = createRouter({
       path: '/profile',
       name: 'profil',
       component: Profile,
+    },
+    { path: '/explore', name: 'trazilica', component: Search },
+    {
+      path: '/projects',
+      name: 'Projekt',
+      component: Projects,
+    },
+    {
+      path: '/projects/create',
+      name: 'NoviProjekt',
+      component: CreateProjects,
     },
   ],
 })
