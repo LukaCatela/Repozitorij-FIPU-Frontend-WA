@@ -166,8 +166,11 @@ async function submit() {
     localStorage.setItem('token', data.token)
     router.push('/')
   } catch (e) {
-    serverError.value =
-      e.response?.data?.message || e.response?.data?.error || 'Greska pri registraciji.'
+    if (e.response?.data?.errors) {
+      serverError.value = e.response.data.errors.map((err) => err.msg).join(', ')
+    } else {
+      serverError.value = e.response?.data?.error || 'Greška.'
+    }
   } finally {
     loading.value = false
   }
