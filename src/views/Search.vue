@@ -16,7 +16,7 @@
         </RouterLink>
       </div>
 
-      <!-- Search + filters -->
+      <!-- Search bar + filteri -->
       <div class="flex flex-col sm:flex-row gap-3 mb-8">
         <div class="relative flex-1">
           <Search class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -49,19 +49,22 @@
         <div v-for="i in 6" :key="i" class="bg-gray-100 rounded-2xl h-64 animate-pulse"></div>
       </div>
 
-      <!-- Projects grid -->
-      <div v-else-if="projects.length" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Prikaz projekata-->
+      <div
+        v-else-if="projects?.length > 0"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
         <RouterLink
           v-for="project in projects"
           :key="project._id"
           :to="`/projects/${project._id}`"
           class="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-lg hover:border-[#8ECAE6] transition-all"
         >
-          <!-- Image -->
+          <!-- Slika -->
           <div class="h-40 bg-[#8ECAE6]/20 overflow-hidden">
             <img
-              v-if="project.image"
-              :src="project.image"
+              v-if="project.thumbnail"
+              :src="project.thumbnail"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
             <div v-else class="w-full h-full flex items-center justify-center">
@@ -69,7 +72,7 @@
             </div>
           </div>
 
-          <!-- Content -->
+          <!-- Sadrzaj -->
           <div class="p-5">
             <h3
               class="font-bold text-[#023047] text-sm mb-2 line-clamp-2 group-hover:text-[#FFB703] transition-colors"
@@ -78,7 +81,7 @@
             </h3>
             <p class="text-gray-400 text-xs line-clamp-2 mb-3">{{ project.description }}</p>
 
-            <!-- Tags -->
+            <!-- Tagovi -->
             <div class="flex flex-wrap gap-1 mb-3">
               <span
                 v-for="tag in project.tags?.slice(0, 3)"
@@ -100,7 +103,6 @@
         </RouterLink>
       </div>
 
-      <!-- Empty -->
       <div v-else class="text-center py-20">
         <FolderOpen class="w-12 h-12 text-gray-200 mx-auto mb-3" />
         <p class="text-gray-400">Nema projekata</p>
@@ -113,7 +115,6 @@
         </RouterLink>
       </div>
 
-      <!-- Pagination -->
       <div v-if="totalPages > 1" class="flex justify-center gap-2 mt-10">
         <button
           @click="changePage(page - 1)"
@@ -151,8 +152,14 @@
 import { ref, computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { Search, Plus, FolderOpen, FileText } from 'lucide-vue-next'
-import { useAuthStore } from '@/stores/auth'
-import api from '@/api/axios'
+import { useAuthStore } from '@/stores/auth.js'
+import api from '@/api/axios.js'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/hr'
+
+dayjs.extend(relativeTime)
+dayjs.locale('hr')
 
 const auth = useAuthStore()
 const projects = ref([])
@@ -162,12 +169,12 @@ const search = ref('')
 const activeTag = ref('')
 const page = ref(1)
 
-const totalPages = computed(() => Math.ceil(total.value / 12))
+const totalPages = computed(() => Math.ceil(total.value / 9))
 
 const popularTags = ['Vue', 'Python', 'React', 'Machine Learning', 'C++']
 
 function formatDate(date) {
-  return dayjs(date).fromNow()
+  return dayjs(date).fromNow() // "prije 2 dana"
 }
 
 async function fetchProjects() {
@@ -177,8 +184,9 @@ async function fetchProjects() {
     if (search.value) params.search = search.value
     if (activeTag.value) params.tag = activeTag.value
     const { data } = await api.get('/projects', { params })
-    projects.value = data.projects
-    total.value = data.total
+    console.log('data:', data)
+    projects.value = data.projects ?? []
+    total.value = data.total ?? 0
   } catch (e) {
     console.error(e)
   } finally {

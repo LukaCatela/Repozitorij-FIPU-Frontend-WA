@@ -20,7 +20,7 @@
                   class="w-full h-full object-cover"
                 />
                 <span v-else class="text-[#023047] font-black text-2xl">
-                  {{ auth.user?.name?.charAt(0) }}{{ auth.user?.last_name?.charAt(0) }}
+                  {{ auth.user?.FirstName?.charAt(0) }}{{ auth.user?.LastName?.charAt(0) }}
                 </span>
               </div>
               <!-- Upload botun -->
@@ -44,7 +44,7 @@
 
           <!-- ime & rola -->
           <h1 class="text-xl font-black text-[#023047]">
-            {{ auth.user?.name }} {{ auth.user?.last_name }}
+            {{ auth.user?.FirstName }} {{ auth.user?.LastName }}
           </h1>
           <div class="flex items-center gap-2 mt-1">
             <span
@@ -219,14 +219,14 @@ const form = reactive({
   social: '',
 })
 
-const skillList = computed(() =>
-  profile.skill
-    ? profile.skill
-        .split(',')
-        .map((s) => s.trim())
-        .filter(Boolean)
-    : [],
-)
+const skillList = computed(() => {
+  if (!profile.skill) return []
+  if (Array.isArray(profile.skill)) return profile.skill // already array
+  return profile.skill
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+})
 
 onMounted(async () => {
   try {
@@ -241,7 +241,7 @@ onMounted(async () => {
     })
   } catch (e) {
     if (e.response?.status === 404) {
-      await api_axios.post('/profile')
+      await api_axios.post('/profiles')
     } else {
       serverError.value = 'Greska pri dohvatu podataka.'
     }
@@ -253,7 +253,15 @@ async function saveProfile() {
   successMsg.value = ''
   saving.value = true
   try {
-    const { data } = await api_axios.put('/profiles/me', form)
+    const { data } = await api_axios.put('/profiles/me', {
+      ...form,
+      skill: form.skill
+        ? form.skill
+            .split(',')
+            .map((s) => s.trim())
+            .filter(Boolean)
+        : [],
+    })
     Object.assign(profile, data)
     successMsg.value = 'Profil uspjesno spremljen!'
     editing.value = false

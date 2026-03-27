@@ -25,6 +25,12 @@
           class="text-sm font-bold text-[#FFB703] px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
           >Moji projekti</RouterLink
         >
+
+        <RouterLink
+          to="/profile"
+          class="text-sm font-bold text-[#FFB703] px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
+          >Moj profil</RouterLink
+        >
       </template>
     </nav>
 

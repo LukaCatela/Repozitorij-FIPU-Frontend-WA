@@ -41,6 +41,10 @@ const router = createRouter({
       name: 'NoviProjekt',
       component: CreateProjects,
     },
+    {
+      path: '/projects/:id',
+      name: 'PojediniProjekt',
+    },
   ],
 })
 

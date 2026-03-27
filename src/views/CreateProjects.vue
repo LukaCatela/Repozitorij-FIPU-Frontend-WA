@@ -194,7 +194,7 @@
 <script setup>
 import { reactive, ref, computed } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
-import { ArrowLeft, ImageIcon, FileText, Globe, Lock } from 'lucide-vue-next'
+import { ArrowLeft, FileText, Globe, Lock } from 'lucide-vue-next'
 import api from '@/api/axios'
 
 const router = useRouter()
@@ -203,10 +203,6 @@ const form = reactive({ title: '', description: '', tags: '', isPublic: true })
 const errors = reactive({})
 const serverError = ref('')
 const loading = ref(false)
-const imageFile = ref(null)
-const imagePreview = ref(null)
-const pdfFile = ref(null)
-const pdfName = ref('')
 
 const tagList = computed(() =>
   form.tags
