@@ -121,7 +121,10 @@ import { useRouter, RouterLink } from 'vue-router'
 import api from '@/api/axios'
 import { Eye, EyeOff } from 'lucide-vue-next'
 
+import { useAuthStore } from '@/stores/auth.js'
+
 const router = useRouter()
+const auth = useAuthStore()
 
 const form = reactive({
   FirstName: '',
@@ -155,15 +158,14 @@ async function submit() {
   if (!validate()) return
   loading.value = true
   try {
-    const { data } = await api.post('/auth/register', {
-      FirstName: form.FirstName,
-      LastName: form.LastName,
-      email: form.email,
-      password: form.password,
-      role: form.isStudent ? 'student' : 'gost',
-      jmbg: form.isStudent ? form.jmbg : undefined,
-    })
-    localStorage.setItem('token', data.token)
+    await auth.register(
+      form.FirstName,
+      form.LastName,
+      form.email,
+      form.password,
+      form.isStudent ? 'student' : 'gost',
+      form.isStudent ? form.jmbg : undefined,
+    )
     router.push('/')
   } catch (e) {
     if (e.response?.data?.errors) {
