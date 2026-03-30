@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-white py-10 px-4">
+  <div class="min-h-screen py-10 px-4">
     <div class="max-w-6xl mx-auto">
       <!-- Header -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
@@ -93,10 +93,20 @@
             </div>
 
             <!-- Footer -->
-            <div class="flex items-center justify-between text-xs text-gray-400">
-              <span>{{ formatDate(project.createdAt) }}</span>
-              <div class="flex items-center gap-1">
-                <FileText v-if="project.pdf" class="w-3 h-3" />
+            <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+              <!-- Author -->
+              <RouterLink
+                :to="`/users/${project.ownerId}`"
+                class="flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#023047] transition-colors"
+              >
+                <User class="w-3 h-3" />
+                <span>{{ project.authorName || 'Nepoznat' }}</span>
+              </RouterLink>
+
+              <!-- Date + PDF icon -->
+              <div class="flex items-center gap-2 text-xs text-gray-400">
+                <FileText v-if="project.pdfs?.length" class="w-3 h-3 text-red-400" />
+                <span>{{ formatDate(project.createdAt) }}</span>
               </div>
             </div>
           </div>
@@ -151,7 +161,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
-import { Search, Plus, FolderOpen, FileText } from 'lucide-vue-next'
+import { Search, Plus, FolderOpen, FileText, User } from 'lucide-vue-next'
 import { useAuthStore } from '@/stores/auth.js'
 import api from '@/api/axios.js'
 import dayjs from 'dayjs'
