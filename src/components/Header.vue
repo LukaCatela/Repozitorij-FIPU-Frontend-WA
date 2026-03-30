@@ -11,37 +11,35 @@
     <nav class="hidden md:flex items-center gap-1" v-if="auth.isLoggedIn">
       <RouterLink
         to="/"
-        class="text-sm font-bold text-[#FFB703] px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
+        class="text-sm font-bold text-black px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
         >Početna</RouterLink
       >
       <RouterLink
         to="/explore"
-        class="text-sm font-bold text-[#FFB703] px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
+        class="text-sm font-bold text-black px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
         >Istraži</RouterLink
       >
       <template v-if="auth.isLoggedIn">
         <RouterLink
           to="/projects"
-          class="text-sm font-bold text-[#FFB703] px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
+          class="text-sm font-bold text-black px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
           >Moji projekti</RouterLink
         >
 
         <RouterLink
           to="/profile"
-          class="text-sm font-bold text-[#FFB703] px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
+          class="text-sm font-bold text-black px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
           >Moj profil</RouterLink
         >
       </template>
     </nav>
 
-    <!-- Right side -->
     <div class="hidden md:flex items-center gap-3">
       <template v-if="auth.isLoggedIn">
         <RouterLink
           to="/profile"
           class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#FFB703]/20 transition-colors"
         >
-          <!-- Profile picture or initials fallback -->
           <div class="w-8 h-8 rounded-full overflow-hidden flex shrink-0">
             <img
               v-if="auth.user?.profilePicture"
@@ -61,9 +59,9 @@
 
         <button
           @click="logout"
-          class="text-sm font-bold text-[#FFB703] hover:text-red-500 px-3 py-2 rounded-xl hover:bg-red-50 transition-colors"
+          class="text-sm font-bold text-white hover:text-red-500 px-3 py-2 rounded-xl hover:bg-red-50 transition-colors"
         >
-          Odjava
+          <LogOutIcon></LogOutIcon>
         </button>
       </template>
       <template v-else>
@@ -82,7 +80,6 @@
       </template>
     </div>
 
-    <!-- Mobile menu button -->
     <button
       @click="menuOpen = !menuOpen"
       class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
@@ -118,12 +115,6 @@
       >
       <RouterLink
         @click="menuOpen = false"
-        to="/jobs"
-        class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors"
-        >Poslovi</RouterLink
-      >
-      <RouterLink
-        @click="menuOpen = false"
         to="/profile"
         class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors"
         >Profil</RouterLink
@@ -155,7 +146,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
-import { Menu, X } from 'lucide-vue-next'
+import { Menu, X, LogOut, LogOutIcon } from 'lucide-vue-next'
 import { useAuthStore } from '@/stores/auth'
 
 const auth = useAuthStore()
