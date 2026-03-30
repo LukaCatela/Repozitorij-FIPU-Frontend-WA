@@ -53,7 +53,7 @@
               v-else
               class="w-full h-full bg-white flex items-center justify-center text-[#023047] font-bold text-xs"
             >
-              {{ auth.user?.name?.charAt(0) }}{{ auth.user?.last_name?.charAt(0) }}
+              {{ auth.user?.FirstName?.charAt(0) }}{{ auth.user?.LastName?.charAt(0) }}
             </div>
           </div>
           <span class="text-sm font-medium text-[#023047]">{{ auth.user?.FirstName }}</span>
