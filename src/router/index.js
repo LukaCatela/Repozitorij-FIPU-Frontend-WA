@@ -5,6 +5,8 @@ import Profile from '@/views/Profile.vue'
 import Projects from '@/views/Projects.vue'
 import Registration from '@/views/Registration.vue'
 import Search from '@/views/Search.vue'
+import SingleProject from '@/views/SingleProject.vue'
+import UserProject from '@/views/UserProject.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -30,7 +32,9 @@ const router = createRouter({
       name: 'profil',
       component: Profile,
     },
+
     { path: '/explore', name: 'trazilica', component: Search },
+
     {
       path: '/projects',
       name: 'Projekt',
@@ -44,6 +48,12 @@ const router = createRouter({
     {
       path: '/projects/:id',
       name: 'PojediniProjekt',
+      component: SingleProject,
+    },
+    {
+      path: '/users/:userId',
+      name: 'UserProjects',
+      component: UserProject,
     },
   ],
 })
