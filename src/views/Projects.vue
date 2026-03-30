@@ -72,12 +72,7 @@
               >
                 Pregledaj
               </RouterLink>
-              <RouterLink
-                :to="`/projects/${project._id}/edit`"
-                class="flex-1 text-center text-xs font-medium text-[#023047] px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors flex items-center justify-center gap-1"
-              >
-                <Pencil class="w-3 h-3" /> Uredi
-              </RouterLink>
+
               <button
                 @click="deleteProject(project._id)"
                 class="px-3 py-1.5 rounded-lg border border-red-200 text-red-400 hover:bg-red-50 transition-colors"

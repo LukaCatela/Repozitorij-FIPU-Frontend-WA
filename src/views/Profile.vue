@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50 py-10 px-4">
+  <div class="min-h-screen py-10 px-4">
     <div class="max-w-3xl mx-auto space-y-6">
       <!-- Profile-->
       <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
