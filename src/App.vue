@@ -15,13 +15,18 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex flex-col min-h-screen">
+  <div
+    class="flex flex-col min-h-screen"
+    style="
+      background-image: url('/background.png');
+      background-size: cover;
+      background-attachment: fixed;
+    "
+  >
     <Header />
-
     <div class="flex-1 flex justify-center">
       <Body />
     </div>
-
     <Footer />
   </div>
 </template>
