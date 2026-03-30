@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-white py-10 px-4">
+  <div class="min-h-screen py-10 px-4">
     <div class="max-w-4xl mx-auto">
       <RouterLink
         to="/explore"

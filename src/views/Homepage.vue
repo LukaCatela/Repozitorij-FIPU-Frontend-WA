@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-white text-gray-900">
+  <div class="min-h-screen text-gray-900">
     <section class="px-6 lg:px-20 py-20 flex flex-col lg:flex-row items-center gap-10">
       <div class="flex-1">
         <h1 class="text-4xl lg:text-5xl font-bold leading-tight">
@@ -50,7 +50,7 @@
       </div>
     </section>
 
-    <section class="bg-white py-16 px-6 lg:px-20">
+    <section class="py-16 px-6 lg:px-20">
       <h2 class="text-3xl font-bold text-center mb-12">Što nudi FIPU Hub?</h2>
 
       <div class="grid md:grid-cols-3 gap-10">
