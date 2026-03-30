@@ -14,6 +14,11 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.setItem('token', data.token)
     localStorage.setItem('user', JSON.stringify(data.user))
   }
+
+  async function register(FirstName, LastName, email, password, role, jmbg) {
+    await api_axios.post('/auth/register', { FirstName, LastName, email, password, role, jmbg })
+    await login(email, password)
+  }
   function logout() {
     token.value = null
     user.value = null
@@ -25,5 +30,5 @@ export const useAuthStore = defineStore('auth', () => {
     const { data } = await api_axios.get('/auth/me')
     user.value = data
   }
-  return { token, user, isLoggedIn, login, logout, fetchMe }
+  return { token, user, isLoggedIn, login, logout, fetchMe, register }
 })
