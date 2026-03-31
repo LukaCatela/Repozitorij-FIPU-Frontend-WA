@@ -150,6 +150,7 @@ function validate() {
   // samo ako student označi da je student
   if (form.isStudent && !form.jmbg) errors.jmbg = 'JMBG je obavezan za studente'
   if (form.jmbg === Number) errors.jmbg = 'JMBG moraju biti brojevi'
+  if (form.jmbg <= 10) errors.jbmg = 'JMBG mora sadrzavati 10 brojeva'
   return Object.keys(errors).length === 0
 }
 
