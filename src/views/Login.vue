@@ -104,8 +104,6 @@ function validate() {
 
   if (!form.password) {
     errors.password = 'Unesite lozinku'
-  } else if (form.password.length < 8) {
-    errors.password = 'Lozinka mora imati barem 8 znakova'
   }
 
   return Object.keys(errors).length === 0
