@@ -152,8 +152,11 @@ function validate() {
     errors.LastName = 'Mora sadrzavat vise od 2 znaka'
   }
 
-  if (!form.email) errors.email = 'Obavezno'
-  if (!emailRegex.test(form.email)) errors.email = 'Email mora imat strukturu user@user.user'
+  if (!form.email) {
+    errors.email = 'Obavezno'
+  } else if (!emailRegex.test(form.email)) {
+    errors.email = 'Email mora imat strukturu user@user.user'
+  }
   if (!form.password || form.password.length < 8) errors.password = 'Minimalno 8 znakova'
 
   // samo ako student označi da je student

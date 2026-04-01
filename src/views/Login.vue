@@ -69,7 +69,7 @@
       <p class="text-center text-gray-400 text-sm mt-6">
         Nemaš račun?
         <RouterLink
-          to="/registration"
+          to="/register"
           class="text-[#023047] font-semibold hover:text-[#FFB703] transition-colors ml-1"
           >Registriraj se</RouterLink
         >
@@ -94,8 +94,20 @@ const showPassword = ref(false)
 
 function validate() {
   Object.keys(errors).forEach((k) => delete errors[k])
-  if (!form.email) errors.email = 'Unesite email'
-  if (!form.password) errors.password = 'Unesite lozinku'
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  if (!form.email) {
+    errors.email = 'Unesite email'
+  } else if (!emailRegex.test(form.email)) {
+    errors.email = 'Krivi email'
+  }
+
+  if (!form.password) {
+    errors.password = 'Unesite lozinku'
+  } else if (form.password.length < 8) {
+    errors.password = 'Lozinka mora imati barem 8 znakova'
+  }
+
   return Object.keys(errors).length === 0
 }
 
