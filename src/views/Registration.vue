@@ -76,17 +76,15 @@
 
         <!-- jmbg -->
         <div v-if="form.isStudent">
-          <label class="block text-sm font-bold text-[#023047] mb-1"
-            >JMBG <span class="text-red-400 font-normal">(Obavezno)</span></label
-          >
+          <label class="block text-sm font-bold text-[#023047] mb-1">JMBG</label>
           <input
             v-model="form.jmbg"
             placeholder="1234567890123"
             maxlength="15"
             class="w-full border rounded-xl px-4 py-2.5 text-sm outline-none bg-white transition-colors"
-            :class="errors.JMBG ? 'border-red-400' : 'border-[#8ECAE6] focus:border-[#023047]'"
+            :class="errors.jmbg ? 'border-red-400' : 'border-[#8ECAE6] focus:border-[#023047]'"
           />
-          <p v-if="errors.JMBG" class="text-red-500 text-xs mt-1">{{ errors.JMBG }}</p>
+          <p v-if="errors.jmbg" class="text-red-500 text-xs mt-1">{{ errors.jmbg }}</p>
         </div>
 
         <!-- Server error -->
@@ -118,7 +116,6 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
-import api from '@/api/axios'
 import { Eye, EyeOff } from 'lucide-vue-next'
 
 import { useAuthStore } from '@/stores/auth.js'
@@ -139,18 +136,36 @@ const errors = reactive({})
 const serverError = ref('')
 const loading = ref(false)
 const showPassword = ref(false)
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 function validate() {
   Object.keys(errors).forEach((k) => delete errors[k])
-  if (!form.FirstName) errors.FirstName = 'Obavezno'
-  if (!form.LastName) errors.LastName = 'Obavezno'
+  if (!form.FirstName) {
+    errors.FirstName = 'Obavezno ispunit'
+  } else if (form.FirstName.length <= 2) {
+    errors.FirstName = 'Mora sadrzavat vise od 2 znaka'
+  }
+
+  if (!form.LastName) {
+    errors.LastName = 'Obavezno ispunit'
+  } else if (form.LastName.length <= 2) {
+    errors.LastName = 'Mora sadrzavat vise od 2 znaka'
+  }
+
   if (!form.email) errors.email = 'Obavezno'
+  if (!emailRegex.test(form.email)) errors.email = 'Email mora imat strukturu user@user.user'
   if (!form.password || form.password.length < 8) errors.password = 'Minimalno 8 znakova'
 
   // samo ako student označi da je student
-  if (form.isStudent && !form.jmbg) errors.jmbg = 'JMBG je obavezan za studente'
-  if (form.jmbg === Number) errors.jmbg = 'JMBG moraju biti brojevi'
-  if (form.jmbg <= 10) errors.jbmg = 'JMBG mora sadrzavati 10 brojeva'
+  if (form.isStudent) {
+    if (!form.jmbg) {
+      errors.jmbg = 'JMBG je obavezan za studente'
+    } else if (form.jmbg.length !== 10) {
+      errors.jmbg = 'JMBG mora sadrzavati 10 brojeva'
+    } else if (!/^\d+$/.test(form.jmbg)) {
+      errors.jmbg = 'JMBG moraju biti samo brojevi'
+    }
+  }
   return Object.keys(errors).length === 0
 }
 
