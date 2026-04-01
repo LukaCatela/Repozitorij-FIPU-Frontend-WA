@@ -128,6 +128,7 @@
         </div>
 
         <!-- Social -->
+        <!--dodana polja posebno za unos-->
         <div>
           <label class="block text-sm font-medium text-[#023047] mb-1">GitHub</label>
           <input
