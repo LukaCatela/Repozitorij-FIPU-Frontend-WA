@@ -21,10 +21,10 @@
             </RouterLink>
 
             <RouterLink
-              to="/post-job"
+              to="/projects/create"
               class="bg-white border border-gray-300 px-5 py-3 rounded-xl shadow hover:bg-[#FFB703] transition"
             >
-              Objavi oglas
+              Objavi projekt
             </RouterLink>
           </template>
           <template v-else="!auth.isLoggedIn">
@@ -53,21 +53,21 @@
     <section class="py-16 px-6 lg:px-20">
       <h2 class="text-3xl font-bold text-center mb-12">Što nudi FIPU Hub?</h2>
 
-      <div class="grid md:grid-cols-3 gap-10">
+      <div class="grid md:grid-cols-2 gap-10">
         <div class="p-6 bg-[#8ECAE6] rounded-xl shadow hover:shadow-lg transition">
           <h3 class="text-xl font-semibold mb-3">Studentski radovi</h3>
           <p class="text-gray-600">
             Objavljuj i pregledaj radove svih kolega na fakultetu. Izgradi svoj portfelj.
           </p>
         </div>
-
+        <!--
         <div class="p-6 bg-[#8ECAE6] rounded-xl shadow hover:shadow-lg transition">
           <h3 class="text-xl font-semibold mb-3">Recenzije i mentorstvo</h3>
           <p class="text-gray-600">
             Profesori i mentori mogu ostavljati komentare, odobravati i ocjenjivati kvalitetu.
           </p>
         </div>
-
+        -->
         <div class="p-6 bg-[#8ECAE6] rounded-xl shadow hover:shadow-lg transition">
           <h3 class="text-xl font-semibold mb-3">Poslovi i projekti</h3>
           <p class="text-gray-600">Objavi ili pronađi projekt, praksu ili studentski posao.</p>
