@@ -119,12 +119,12 @@
         class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors"
         >Profil</RouterLink
       >
-      <button
+      <LogOut
         @click="logout"
         class="text-left text-sm text-red-500 px-3 py-2 rounded-xl hover:bg-red-50 transition-colors"
       >
         Odjava
-      </button>
+      </LogOut>
     </template>
     <template v-else>
       <RouterLink
@@ -135,7 +135,7 @@
       >
       <RouterLink
         @click="menuOpen = false"
-        to="/registration"
+        to="/register"
         class="text-sm font-bold bg-[#FFB703] text-[#023047] px-3 py-2 rounded-xl hover:bg-[#FB8500] transition-colors text-center"
         >Registracija</RouterLink
       >
