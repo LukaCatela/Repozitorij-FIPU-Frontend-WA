@@ -129,11 +129,27 @@
 
         <!-- Social -->
         <div>
-          <label class="block text-sm font-medium text-[#023047] mb-1">LinkedIn / GitHub</label>
+          <label class="block text-sm font-medium text-[#023047] mb-1">GitHub</label>
           <input
-            v-model="form.social"
-            placeholder="https://linkedin.com/in/..."
-            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#8ECAE6] transition-colors"
+            v-model="form.social.github"
+            placeholder="https://github.com/"
+            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#8ECAE6]"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-[#023047] mb-1">LinkedIn</label>
+          <input
+            v-model="form.social.linkedin"
+            placeholder="https://linkedin.com/"
+            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#8ECAE6]"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-[#023047] mb-1">Web</label>
+          <input
+            v-model="form.social.web"
+            placeholder="https://yourwebsite.com"
+            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#8ECAE6]"
           />
         </div>
 
@@ -170,20 +186,39 @@
         </div>
 
         <!-- Social -->
-        <div
-          v-if="profile.social"
-          class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5"
-        >
+        <div v-if="hasSocial" class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
           <h3 class="text-sm font-bold text-[#023047] mb-3 flex items-center gap-2">
             <Link2 class="w-4 h-4 text-[#FFB703]" /> Linkovi
           </h3>
-          <a
-            :href="profile.social"
-            target="_blank"
-            class="text-sm text-[#8ECAE6] hover:text-[#023047] transition-colors break-all"
-          >
-            {{ profile.social }}
-          </a>
+          <div class="space-y-2">
+            <a
+              v-if="profile.social?.github"
+              :href="profile.social.github"
+              target="_blank"
+              class="flex items-center gap-2 text-sm text-[#8ECAE6] hover:text-[#023047] transition-colors"
+            >
+              <span class="text-xs text-gray-400 w-16">GitHub</span>
+              {{ profile.social.github }}
+            </a>
+            <a
+              v-if="profile.social?.linkedin"
+              :href="profile.social.linkedin"
+              target="_blank"
+              class="flex items-center gap-2 text-sm text-[#8ECAE6] hover:text-[#023047] transition-colors"
+            >
+              <span class="text-xs text-gray-400 w-16">LinkedIn</span>
+              {{ profile.social.linkedin }}
+            </a>
+            <a
+              v-if="profile.social?.web"
+              :href="profile.social.web"
+              target="_blank"
+              class="flex items-center gap-2 text-sm text-[#8ECAE6] hover:text-[#023047] transition-colors"
+            >
+              <span class="text-xs text-gray-400 w-16">Web</span>
+              {{ profile.social.web }}
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -228,6 +263,10 @@ const skillList = computed(() => {
     .filter(Boolean)
 })
 
+const hasSocial = computed(
+  () => profile.social?.github || profile.social?.linkedin || profile.social?.web,
+)
+
 onMounted(async () => {
   try {
     const { data } = await api_axios.get('/profiles/me')
@@ -236,8 +275,12 @@ onMounted(async () => {
       bio: data.bio || '',
       study_year: data.study_year || '',
       department: data.department || '',
-      skill: data.skill || '',
-      social: data.social || '',
+      skill: Array.isArray(data.skill) ? data.skill.join(', ') : data.skill || '',
+      social: {
+        github: data.social?.github || '',
+        linkedin: data.social?.linkedin || '',
+        web: data.social?.web || '',
+      },
     })
   } catch (e) {
     if (e.response?.status === 404) {
