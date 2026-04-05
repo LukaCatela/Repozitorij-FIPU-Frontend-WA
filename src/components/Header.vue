@@ -111,7 +111,7 @@
         @click="menuOpen = false"
         to="/projects"
         class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors"
-        >Projekti</RouterLink
+        >Moji projekti</RouterLink
       >
       <RouterLink
         @click="menuOpen = false"
@@ -119,12 +119,12 @@
         class="text-sm font-medium text-[#023047] px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors"
         >Profil</RouterLink
       >
-      <LogOut
+      <button
         @click="logout"
-        class="text-left text-sm text-red-500 px-3 py-2 rounded-xl hover:bg-red-50 transition-colors"
+        class="text-sm font-bold text-black hover:text-red-500 px-3 py-2 rounded-xl hover:bg-red-50 transition-colors"
       >
-        Odjava
-      </LogOut>
+        <LogOutIcon></LogOutIcon>
+      </button>
     </template>
     <template v-else>
       <RouterLink
@@ -146,7 +146,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
-import { Menu, X, LogOut, LogOutIcon } from 'lucide-vue-next'
+import { Menu, X, LogOutIcon } from 'lucide-vue-next'
 import { useAuthStore } from '@/stores/auth'
 
 const auth = useAuthStore()
