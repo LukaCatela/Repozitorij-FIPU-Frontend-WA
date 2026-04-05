@@ -50,10 +50,7 @@
       </div>
 
       <!-- Prikaz projekata-->
-      <div
-        v-else-if="projects?.length > 0"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-      >
+      <div v-else-if="projects.length" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <RouterLink
           v-for="project in projects"
           :key="project._id"
@@ -104,8 +101,7 @@
               </RouterLink>
 
               <!-- Date + PDF icon -->
-              <div class="flex items-center gap-2 text-xs text-gray-400">
-                <FileText v-if="project.pdfs?.length" class="w-3 h-3 text-red-400" />
+              <div class="flex items-center justify-between text-xs text-gray-400">
                 <span>{{ formatDate(project.createdAt) }}</span>
               </div>
             </div>
@@ -178,6 +174,7 @@ const loading = ref(false)
 const search = ref('')
 const activeTag = ref('')
 const page = ref(1)
+const users = ref([])
 
 const totalPages = computed(() => Math.ceil(total.value / 9))
 
@@ -191,12 +188,34 @@ async function fetchProjects() {
   loading.value = true
   try {
     const params = { page: page.value }
-    if (search.value) params.search = search.value
     if (activeTag.value) params.tag = activeTag.value
     const { data } = await api.get('/projects', { params })
-    console.log('data:', data)
     projects.value = data.projects ?? []
     total.value = data.total ?? 0
+    users.value = []
+  } catch (e) {
+    console.error(e)
+  } finally {
+    loading.value = false
+  }
+}
+
+async function fetchAll() {
+  if (!search.value) {
+    fetchProjects()
+    return
+  }
+  loading.value = true
+  try {
+    const [projectsRes, usersRes] = await Promise.all([
+      api.get('/projects', { params: { search: search.value, page: page.value } }),
+      api.get('/users/search', { params: { q: search.value } }),
+    ])
+    console.log('projects:', projectsRes.data) // add this
+    console.log('users:', usersRes.data)
+    projects.value = projectsRes.data.projects ?? []
+    total.value = projectsRes.data.total ?? 0
+    users.value = usersRes.data ?? []
   } catch (e) {
     console.error(e)
   } finally {
@@ -209,19 +228,19 @@ function onSearch() {
   clearTimeout(searchTimeout)
   searchTimeout = setTimeout(() => {
     page.value = 1
-    fetchProjects()
+    fetchAll()
   }, 400)
 }
 
 function filterTag(tag) {
   activeTag.value = activeTag.value === tag ? '' : tag
   page.value = 1
-  fetchProjects()
+  fetchAll()
 }
 
 function changePage(p) {
   page.value = p
-  fetchProjects()
+  fetchAll()
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 

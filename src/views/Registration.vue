@@ -183,8 +183,10 @@ async function submit() {
       form.email,
       form.password,
       form.isStudent ? 'student' : 'gost',
-      form.isStudent ? form.jmbg : undefined,
+      form.isStudent ? form.jmbg : '',
     )
+    console.log(form.jmbg)
+    console.log(typeof form.jmbg)
     router.push('/')
   } catch (e) {
     if (e.response?.data?.errors) {
