@@ -44,6 +44,24 @@
           </p>
         </div>
 
+        <div v-if="aiFeeedback" class="bg-[#FFB703]/10 border border-[#FFB703]/30 rounded-2xl p-5">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-lg">🤖</span>
+            <h3 class="font-bold text-[#023047] text-sm">AI analiza ideje</h3>
+          </div>
+          <p class="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{{ aiFeeedback }}</p>
+        </div>
+
+        <button
+          type="button"
+          @click="analyzeIdea"
+          :disabled="!form.title || !form.description || analyzingIdea"
+          class="w-full border-2 border-dashed border-[#8ECAE6] text-[#023047] py-2.5 rounded-xl text-sm font-medium hover:border-[#023047] hover:bg-yellow-100 transition-colors disabled:opacity-40 flex items-center justify-center gap-2"
+        >
+          <Sparkles class="w-4 h-4" />
+          {{ analyzingIdea ? 'Analiziram...' : 'Analiziraj ideju s AI' }}
+        </button>
+
         <!-- Tagovi -->
         <div>
           <label class="block text-sm font-medium text-[#023047] mb-1">Tagovi</label>
@@ -194,7 +212,7 @@
 <script setup>
 import { reactive, ref, computed } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
-import { ArrowLeft, FileText, Globe, Lock } from 'lucide-vue-next'
+import { ArrowLeft, FileText, Globe, Lock, Sparkles } from 'lucide-vue-next'
 import api from '@/api/axios'
 
 const router = useRouter()
@@ -203,6 +221,9 @@ const form = reactive({ title: '', description: '', tags: '', isPublic: true })
 const errors = reactive({})
 const serverError = ref('')
 const loading = ref(false)
+
+const aiFeeedback = ref('')
+const analyzingIdea = ref(false)
 
 const tagList = computed(() =>
   form.tags
@@ -217,6 +238,24 @@ const imageFiles = ref([])
 const imagePreviews = ref([])
 const pdfFiles = ref([])
 const pdfNames = ref([])
+
+async function analyzeIdea() {
+  analyzingIdea.value = true
+  aiFeeedback.value = ''
+  try {
+    const { data } = await api.post('/ai/project', {
+      title: form.title,
+      description: form.description,
+    })
+    aiFeeedback.value = data.feedback
+    console.log(aiFeeedback)
+    console.log(data)
+  } catch (e) {
+    console.error(e)
+  } finally {
+    analyzingIdea.value = false
+  }
+}
 
 function handleImage(e) {
   const files = Array.from(e.target.files)
