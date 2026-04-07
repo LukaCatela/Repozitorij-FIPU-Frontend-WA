@@ -1,4 +1,5 @@
 import CreateProjects from '@/views/CreateProjects.vue'
+import DashboardAdmin from '@/views/DashboardAdmin.vue'
 import Homepage from '@/views/Homepage.vue'
 import Login from '@/views/Login.vue'
 import Profile from '@/views/Profile.vue'
@@ -54,6 +55,11 @@ const router = createRouter({
       path: '/users/:userId',
       name: 'UserProjects',
       component: UserProject,
+    },
+    {
+      path: '/admin',
+      name: 'AdminDashboard',
+      component: DashboardAdmin,
     },
   ],
 })

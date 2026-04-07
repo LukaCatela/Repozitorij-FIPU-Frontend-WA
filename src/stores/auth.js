@@ -6,6 +6,7 @@ export const useAuthStore = defineStore('auth', () => {
   const token = ref(localStorage.getItem('token') || null)
   const user = ref(JSON.parse(localStorage.getItem('user') || 'null'))
   const isLoggedIn = computed(() => !!token.value) // ista stvar kao i ovo: token.value !== null samo krace
+  const isAdmin = computed(() => user.value?.role === 'admin')
 
   async function login(email, password) {
     const { data } = await api_axios.post('/auth/login', { email, password })
@@ -30,5 +31,5 @@ export const useAuthStore = defineStore('auth', () => {
     const { data } = await api_axios.get('/auth/me')
     user.value = data
   }
-  return { token, user, isLoggedIn, login, logout, fetchMe, register }
+  return { token, user, isLoggedIn, isAdmin, login, logout, fetchMe, register }
 })

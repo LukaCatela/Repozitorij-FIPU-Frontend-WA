@@ -46,7 +46,6 @@
 
         <div v-if="aiFeeedback" class="bg-[#FFB703]/10 border border-[#FFB703]/30 rounded-2xl p-5">
           <div class="flex items-center gap-2 mb-3">
-            <span class="text-lg">🤖</span>
             <h3 class="font-bold text-[#023047] text-sm">AI analiza ideje</h3>
           </div>
           <p class="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{{ aiFeeedback }}</p>
@@ -213,7 +212,7 @@
 import { reactive, ref, computed } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
 import { ArrowLeft, FileText, Globe, Lock, Sparkles } from 'lucide-vue-next'
-import api from '@/api/axios'
+import api from '@/api/axios.js'
 
 const router = useRouter()
 

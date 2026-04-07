@@ -31,6 +31,13 @@
           class="text-sm font-bold text-black px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
           >Moj profil</RouterLink
         >
+        <template v-if="auth.isAdmin">
+          <RouterLink
+            to="/admin"
+            class="text-sm font-bold text-black px-3 py-2 rounded-xl hover:bg-[#FFB703] hover:text-black transition-colors"
+            >Dashboard</RouterLink
+          >
+        </template>
       </template>
     </nav>
 
