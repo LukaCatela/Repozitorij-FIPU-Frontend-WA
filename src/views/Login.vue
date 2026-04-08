@@ -26,9 +26,6 @@
         <div>
           <div class="flex items-center justify-between mb-1">
             <label class="block text-sm font-medium text-[#023047]">Lozinka</label>
-            <a href="#" class="text-xs text-[#8ECAE6] hover:text-[#023047] transition-colors"
-              >Zaboravljena lozinka?</a
-            >
           </div>
           <div class="relative">
             <input

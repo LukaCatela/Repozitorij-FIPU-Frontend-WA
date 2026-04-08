@@ -124,7 +124,7 @@
         </div>
       </div>
 
-      <!-- PROJECTS TABLE -->
+      <!-- PROJECTS Tablica -->
       <div v-else class="bg-white/80 border border-gray-200 rounded-2xl overflow-hidden">
         <table class="w-full">
           <thead class="bg-gray-50 border-b border-gray-200">
